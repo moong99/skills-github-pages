@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>미래작전 역할 테스트</title>
+  <style>
+    body { font-family: sans-serif; background: #f1fdf2; padding: 20px; }
+    h1 { color: green; }
+    .question { margin-top: 20px; }
+    .result { margin-top: 30px; padding: 20px; background: #dfffe2; border: 1px solid #a5d6a7; display: none; }
+    button { margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<h1>🔍 미래작전 MBTI 역할 테스트</h1>
+
+<div class="question">
+  <p>Q1. 새로운 상황이 닥쳤을 때, 나는?</p>
+  <label><input type="radio" name="q1" value="leader"> 빠르게 판단하고 사람을 모은다 (리더형)</label><br>
+  <label><input type="radio" name="q1" value="analyst"> 배경정보부터 수집하고 정리한다 (분석가형)</label><br>
+  <label><input type="radio" name="q1" value="fighter"> 직접 뛰어들어 해결한다 (전투형)</label>
+</div>
+
+<div class="question">
+  <p>Q2. 내가 더 편한 상황은?</p>
+  <label><input type="radio" name="q2" value="leader"> 책임을 지고 팀을 이끄는 상황</label><br>
+  <label><input type="radio" name="q2" value="analyst"> 객관적인 데이터를 다루는 상황</label><br>
+  <label><input type="radio" name="q2" value="fighter"> 몸으로 직접 부딪히는 상황</label>
+</div>
+
+<div class="question">
+  <p>Q3. 게임을 할 때 나는?</p>
+  <label><input type="radio" name="q3" value="leader"> 전략 짜는 사람</label><br>
+  <label><input type="radio" name="q3" value="analyst"> 정보 수집/지원하는 사람</label><br>
+  <label><input type="radio" name="q3" value="fighter"> 맨 앞에서 싸우는 사람</label>
+</div>
+
+<button onclick="calculate()">결과 보기</button>
+
+<div class="result" id="resultBox">
+  <h2>당신의 역할은? 🎯</h2>
+  <p id="roleName"></p>
+  <p id="roleDesc"></p>
+</div>
+
+<script>
+function calculate() {
+  let scores = {leader: 0, analyst: 0, fighter: 0};
+  for (let i = 1; i <= 3; i++) {
+    let q = document.querySelector(`input[name="q${i}"]:checked`);
+    if (q) scores[q.value]++;
+  }
+  let role = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+  let names = {leader: "🧭 리더형 지휘관", analyst: "🧠 분석가형 전략가", fighter: "🔥 전투형 돌격대장"};
+  let descs = {
+    leader: "당신은 팀을 이끄는 추진력 있는 리더입니다. 현장 판단력과 책임감이 탁월해요.",
+    analyst: "분석력과 관찰력이 뛰어난 전략가! 정보해석과 팀 지원에 강합니다.",
+    fighter: "직접 뛰어들어 임무를 완수하는 실천형 인물! 액션에 강한 에이스입니다."
+  };
+  document.getElementById("resultBox").style.display = "block";
+  document.getElementById("roleName").textContent = names[role];
+  document.getElementById("roleDesc").textContent = descs[role];
+}
+</script>
+
+</body>
+</html>
